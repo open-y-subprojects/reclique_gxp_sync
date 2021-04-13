@@ -1,5 +1,5 @@
 {
-  "name": "open-y-subprojects/openy_daxko_gxp_syncer",
+  "name": "open-y-subprojects/reclique_gxp_sync",
   "description": "Daxko v1 GroupEx PRO API Syncer into Open Y Program Event Framework.",
   "type": "drupal-module",
   "require": {
