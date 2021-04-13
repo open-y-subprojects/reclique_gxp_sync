@@ -1,0 +1,10 @@
+name: OpenY ReClique GXP
+type: module
+description: Integration with ReClique API.
+core_version_requirement: ^8 || ^9
+package: OpenY
+dependencies:
+  - migrate
+  - migrate_plus
+  - migrate_api
+  - migrate_tools

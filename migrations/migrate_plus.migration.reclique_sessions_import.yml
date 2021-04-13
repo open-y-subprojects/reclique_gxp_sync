@@ -1,0 +1,171 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - reclique_gxp_sync
+id: reclique_sessions_import
+migration_tags:
+  - openy_import
+migration_group: reclique_gxp_import
+deriver: Drupal\reclique_gxp_sync\SourceMigrationDeriver
+label: 'Import Sessions'
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+  item_selector: 0
+  urls: '/classes/json'
+  track_changes: true
+  ids:
+    id:
+      type: string
+  fields:
+    -
+      name: title
+      label: 'Title'
+      selector: /ClassCategory
+    -
+      name: id
+      label: 'Id'
+      selector: /ID
+    -
+      name: class
+      label: 'Class'
+      selector: /ClassCategory
+    -
+      name: time_of_day
+      label: 'Time Of Day'
+      selector: /TimeOfDay
+    -
+      name: days
+      label: 'Days'
+      selector: /Days
+    -
+      name: start_date
+      label: 'Start Date'
+      selector: /StartDate
+    -
+      name: end_date
+      label: 'End Date'
+      selector: /EndDate
+    -
+      name: timezone
+      label: 'Timezone'
+      selector: /Timezone
+    -
+      name: duration
+      label: 'Duration'
+      selector: /Duration
+    -
+      name: requires_registration
+      label: 'Requires Registration'
+      selector: /RequiresRegistration
+    -
+      name: category_exceptions
+      label: 'Category Exceptions'
+      selector: /CategoryExceptions
+    -
+      name: instance_exceptions
+      label: 'Instance Exceptions'
+      selector: /InstanceExceptions
+    -
+      name: location
+      label: 'Location'
+      selector: /Branch
+    -
+      name: description
+      label: 'Description'
+      selector: /Description
+    -
+      name: instructor
+      label: 'Instructor'
+      selector: /Instructor
+    -
+      name: room
+      label: 'Room'
+      selector: /Space
+
+process:
+  title:
+    plugin: default_value
+    source: title
+  field_session_class:
+    plugin: reclique_class
+    source: class
+    type: class
+  type:
+    plugin: default_value
+    default_value: session
+  field_session_time:
+    plugin: reclique_schedule
+    source: time_of_day
+  _prepare_field_session_exclusions:
+    - plugin: get
+      source:
+        - category_exceptions
+        - instance_exceptions
+    - plugin: flatten
+  field_session_exclusions:
+    -
+      plugin: reclique_prepare_exclusions
+      source: '@_prepare_field_session_exclusions'
+    -
+      plugin: sub_process
+      process:
+        temp_data:
+        -
+          plugin: reclique_exclusions
+          source: "start_time"
+        value:
+          -
+            plugin: extract
+            source: "@temp_data"
+            index:
+              - "value"
+        end_value:
+          -
+            plugin: extract
+            source: "@temp_data"
+            index:
+              - "end_value"
+  field_session_location:
+    plugin: reclique_location
+    source: location
+  status:
+    plugin: default_value
+    default_value: 1
+  uid:
+    plugin: default_value
+    default_value: 1
+  field_session_reg_link/uri:
+    plugin: reclique_reg_link
+    source: requires_registration
+  field_session_reg_link/title:
+    plugin: default_value
+    default_value: 'Sign Up'
+  field_session_description/value: description
+  field_session_description/format:
+    plugin: default_value
+    default_value: full_html
+  field_session_instructor:
+    -
+      plugin: skip_on_value
+      equals: true
+      source: instructor
+      method: process
+      value:
+        - null
+    -
+      plugin: substr
+      source: instructor
+      start: 0
+      length: 255
+  field_physical_location_text: room
+  field_session_room: room
+  field_productid: id
+destination:
+  plugin: 'entity:node'
+migration_dependencies:
+  required:
+    - reclique_classes_import

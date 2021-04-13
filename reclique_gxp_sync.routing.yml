@@ -1,0 +1,7 @@
+reclique_gxp_sync.settings:
+  path: /admin/openy/integrations/reclique-gxp
+  defaults:
+    _form: '\Drupal\reclique_gxp_sync\Form\SettingsForm'
+    _title: 'ReClique GXP settings'
+  requirements:
+    _permission: 'administer reclique gxp'
