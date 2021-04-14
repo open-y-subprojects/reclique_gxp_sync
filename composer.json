@@ -1,6 +1,6 @@
 {
   "name": "open-y-subprojects/reclique_gxp_sync",
-  "description": "Reclique API Syncer into Open Y Program Event Framework.",
+  "description": "Reclique Schedules API Syncer into Open Y Program Event Framework.",
   "type": "drupal-module",
   "require": {
     "ymcatwincities/openy": "^8.2.7 || ^9",
