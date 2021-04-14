@@ -1,6 +1,6 @@
-name: OpenY ReClique GXP
+name: OpenY ReClique Schedules syncer
 type: module
-description: Integration with ReClique API.
+description: Integration with ReClique Schedules API.
 core_version_requirement: ^8 || ^9
 package: OpenY
 dependencies:
