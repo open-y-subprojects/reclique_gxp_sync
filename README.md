@@ -1,4 +1,4 @@
-## About ReClique GXP Sync
+## About ReClique Schedules Sync
 
 This is the Group Exercises import for [ReClique](https://reclique.com/).
 
