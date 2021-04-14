@@ -1,0 +1,7 @@
+reclique_gxp_sync.openy_integrations_reclique:
+  title: ReClique Schedules
+  route_name: reclique_gxp_sync.settings
+  parent: openy_system.openy_integrations
+  description: 'Configure Open Y integration for ReClique Schedules service.'
+  position: left
+  weight: 10

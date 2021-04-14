@@ -1,0 +1,23 @@
+<?php
+
+use Drupal\Component\Datetime\DateTimePlus;
+
+/**
+ * Modify the schedules search results prior output.
+ */
+function reclique_gxp_sync_openy_repeat_results_alter(&$result, $request) {
+  // Dynamically generate Sign Up links (pass event's date to url.)
+  $site_timezone = \Drupal::config('system.date')->get('timezone.default');
+  foreach ($result as $item) {
+    if (empty($item->register_url)) {
+      continue;
+    }
+    if (!empty($item->time_start_calendar)) {
+      $date = DateTimePlus::createFromFormat('Y-m-d H:i:s', $item->time_start_calendar, $site_timezone)
+        ->setTimezone(new \DateTimeZone('UTC'))
+        ->format('Y-m-d');
+
+      $item->register_url = preg_replace('/DATE_PLACEHOLDER/', $date, $item->register_url);
+    }
+  }
+}

@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - reclique_gxp_sync
+id: reclique_gxp_import
+label: ReClique Group Exercises import
+description: 'Group Exercises migration for ReClique'
+source_type: URL
+module: reclique_gxp_sync
+shared_configuration: null
